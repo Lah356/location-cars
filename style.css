@@ -1,0 +1,604 @@
+body {
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  direction: rtl;
+  background: #f5f6fa;
+}
+
+/* ===== Header ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 25px;
+  box-sizing: border-box;
+
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: white;
+  z-index: 4;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+header nav a {
+  margin: 0 12px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+header nav a:hover {
+  color: gold;
+}
+
+/* ===== Slider ===== */
+.slider {
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  width: 85%;
+  max-width: 1200px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  opacity: 0;
+  transition: 1s ease;
+  gap: 60px;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Text */
+.text {
+  color: white;
+  max-width: 450px;
+}
+
+.text h2 {
+  font-size: 55px;
+  margin: 0;
+}
+
+.text p {
+  font-size: 22px;
+  margin: 15px 0;
+}
+
+/* Image */
+.car-img {
+  width: 800px;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 0 35px rgba(255,255,255,0.25);
+}
+
+/* Buttons */
+.btn {
+  background: gold;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: white;
+}
+
+.small {
+  padding: 8px 20px;
+}
+
+/* Slider Arrows */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 60px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+/* ===== Glow Behind Car ===== */
+.slide::before {
+  content: "";
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255,215,0,0.25), transparent 70%);
+  filter: blur(60px);
+  top: 50%;
+  right: 15%;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* باش السيارة والنص يبقاو فوق */
+.slide * {
+  position: relative;
+  z-index: 2;
+}
+
+
+.prev { left: 25px; }
+.next { right: 25px; }
+
+/* ===== Cars Section ===== */
+.title {
+  text-align: center;
+  font-size: 35px;
+  margin: 50px 0 40px;
+color: white;
+}
+
+/* ===== Cars Section ===== */
+.cars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  padding: 0 20px 80px;
+}
+
+.car-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+
+  border-radius: 22px; /* بدل 100px */
+  overflow: hidden;
+
+  text-align: center;
+  padding: 15px;
+
+  box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+
+  transition: 0.35s ease;
+}
+
+/* Hover Effect */
+.car-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.15);
+}
+
+/* Image */
+.car-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  transition: 0.4s ease;
+}
+
+.car-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Title */
+.car-card h3 {
+  font-size: 17px;
+  margin: 6px 0; /* نقصنا المسافة */
+  color: white;
+}
+
+/* Price */
+.car-card p {
+  font-size: 14px;
+  margin: 5px 0;
+  color: gold;
+}
+
+/* Button */
+.car-card .btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+
+  border-radius: 14px;
+  background: gold;
+  color: black;
+  font-weight: bold;
+
+  transition: 0.3s ease;
+}
+
+.car-card .btn:hover {
+  transform: scale(1.08);
+  background: white;
+}
+#cars {
+  background: #111;
+  padding-top: 60px;
+}
+
+
+/* Footer */
+footer {
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+/* ===== Responsive ===== */
+@media(max-width: 900px) {
+  .slide {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .text h2 {
+    font-size: 40px;
+  }
+
+  .car-img {
+    width: 320px;
+  }
+}
+
+/* ===== Smooth Animation ===== */
+.slide {
+  transform: scale(1.05);
+}
+
+.slide.active {
+  transform: scale(1);
+}
+
+/* Text Animation */
+.text {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s ease;
+}
+
+.slide.active .text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Dots ===== */
+.dots {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 5px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dots span.active {
+  opacity: 1;
+  background: gold;
+}
+
+/* ===== Animated Gradient Background ===== */
+.slider {
+  background: linear-gradient(-45deg, #000, #111, #222, #000);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+}
+
+/* Animation Keyframes */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.car-img {
+  transition: 1s ease;
+}
+
+
+
+.car-card {
+  transition: 0.35s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.car-card .btn {
+  transition: 0.3s ease;
+}
+
+.car-card .btn:hover {
+  transform: scale(1.08);
+  background: gold;
+  color: black;
+}
+
+.car-card img {
+  transition: 0.4s ease;
+}
+
+.car-card:hover img {
+  transform: scale(1.06);
+}
+/* ===== Scroll Reveal Animation ===== */
+.car-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.7s ease;
+}
+
+/* ملي كتدخل فالشاشة */
+.car-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.car-card.show {
+  transition-delay: calc(var(--i) * 0.15s);
+}
+/* ===== Slider Intro Animation ===== */
+
+/* العنوان */
+.slide.active .text h2 {
+  animation: titleDrop 1s ease forwards;
+}
+
+@keyframes titleDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* الفقرة */
+.slide.active .text p {
+  animation: textFade 1.2s ease forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+@keyframes textFade {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* الزر */
+.slide.active .btn {
+  animation: btnPop 1s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+@keyframes btnPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* الصورة */
+.slide.active .car-img {
+  animation: carMove 1.3s ease forwards;
+}
+
+@keyframes carMove {
+  from {
+    opacity: 0;
+    transform: translateX(80px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1.05);
+  }
+}
+
+body {
+  margin: 0;
+  font-family: "Tahoma", sans-serif;
+  background: #f4f6fb;
+  color: #222;
+}
+
+/* ===== Header ===== */
+.page-header {
+  text-align: center;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #000, #222);
+  color: white;
+}
+
+.page-header h1 {
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* ===== Contact Layout ===== */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  max-width: 1150px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+/* ===== Info Box ===== */
+.contact-info {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(196, 16, 16, 0.12);
+}
+
+.contact-info h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+/* زر واتساب */
+.whatsapp-btn {
+  display: block;
+  margin: 25px 0;
+  padding: 14px;
+  text-align: center;
+  background: #25D366;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.whatsapp-btn:hover {
+  opacity: 0.8;
+}
+
+/* Social Links */
+.social-links a {
+  display: inline-block;
+  margin: 10px 12px 0 0;
+  text-decoration: none;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* ===== Form Box ===== */
+.contact-form {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.contact-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 15px;
+}
+
+.contact-form textarea {
+  height: 130px;
+  resize: none;
+}
+
+.contact-form button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: black;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-form button:hover {
+  background: #007bff;
+}
+
+/* ===== Map ===== */
+.map {
+  margin-top: 50px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  font-size: 15px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+}
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  color: gold;
+  letter-spacing: 1px;
+}

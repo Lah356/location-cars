@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>حجز السيارة</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      direction: rtl;
+      background: linear-gradient(to bottom, #f9f9f9, #eaeaea);
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 15px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #ffb400;
+    }
+
+    .btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, #ffb400, #ff8800);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: black;
+      color: white;
+    }
+
+    /* Box الثمن */
+    #priceBox {
+      margin-top:25px;
+      padding:20px;
+      border-radius:20px;
+      background: #f9f9f9;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      text-align:center;
+      font-size:18px;
+      line-height:2;
+    }
+
+    #totalPrice {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: orange;
+      background: #fff3d6;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .car-name {
+      color: #ff8800;
+      font-weight: bold;
+    }
+
+    /* Extras Title */
+    .extras-title {
+      margin-top: 35px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* Extras Grid */
+    .extras, .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 15px;
+    }
+
+    /* Card */
+    .extra-card {
+      background: #f9f9f9;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: 0.3s ease;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .extra-card .icon {
+      font-size: 35px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .extra-card h4 {
+      margin: 5px 0;
+      font-size: 17px;
+    }
+
+    .extra-card p {
+      margin: 0;
+      color: #ff8800;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    /* Hide checkbox */
+    .extra-card input {
+      display: none;
+    }
+
+    /* Selected Card */
+    .extra-card.active {
+      border-color: #ffb400;
+      background: #fff6dd;
+      transform: translateY(-5px);
+    }
+
+    /* Hover effect */
+    .extra-card:hover {
+      transform: scale(1.03);
+    }
+
+    /* Responsive */
+    @media(max-width: 700px) {
+      .extras, .extras-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  🚗 صفحة حجز السيارة
+</header>
+
+<div class="container">
+  <h2>حجز سيارة: <span class="car-name" id="carName"></span></h2>
+
+  <!-- ✅ معلومات الزبون -->
+  <h3>👤 معلومات شخصية</h3>
+
+  <label>👤 الاسم الشخصي</label>
+  <input type="text" id="firstName" placeholder="مثال: الحسن">
+
+  <label>👤 الاسم العائلي</label>
+  <input type="text" id="lastName" placeholder="مثال: العلوي">
+
+  <label>🆔 رقم البطاقة الوطنية</label>
+  <input type="text" id="idCard" placeholder="مثال: AB123456">
+
+  <label>🎂 تاريخ الازدياد</label>
+  <input type="date" id="birthDate">
+
+  <label>📍 المدينة</label>
+  <select id="city">
+    <option>الدار البيضاء</option>
+    <option>مراكش</option>
+    <option>أكادير</option>
+    <option>طنجة</option>
+  </select>
+
+  <label>📅 تاريخ البداية</label>
+  <input type="date" id="startDate">
+
+  <label>📅 تاريخ النهاية</label>
+  <input type="date" id="endDate">
+
+  <!-- ✅ Extras Cards -->
+  <h3 class="extras-title">➕ إضافات اختيارية</h3>
+  <div class="extras">
+    <label class="extra-card">
+      <input type="checkbox" id="driver">
+      <span class="icon">🚖</span>
+      <h4>سائق خاص</h4>
+      <p>+150 درهم / اليوم</p>
+    </label>
+    <label class="extra-card">
+      <input type="checkbox" id="gps">
+      <span class="icon">📍</span>
+      <h4>GPS</h4>
+      <p>+50 درهم / اليوم</p>
+    </label>
+    <label class="extra-card">
+      <input type="checkbox" id="babySeat">
+      <span class="icon">👶</span>
+      <h4>كرسي طفل</h4>
+      <p>+30 درهم / اليوم</p>
+    </label>
+  </div>
+
+  <h3>✨ Extras إضافية</h3>
+  <div class="extras-grid">
+    <label class="extra-card">
+      <input type="checkbox" value="150">
+      <span class="icon">🚖</span>
+      <h4>سائق خاص</h4>
+      <p>+150 درهم / اليوم</p>
+    </label>
+    <label class="extra-card">
+      <input type="checkbox" value="100">
+      <span class="icon">🛡️</span>
+      <h4>تأمين شامل</h4>
+      <p>+100 درهم / اليوم</p>
+    </label>
+    <label class="extra-card">
+      <input type="checkbox" value="80">
+      <span class="icon">⛽</span>
+      <h4>خزان ممتلئ</h4>
+      <p>+80 درهم مرة واحدة</p>
+    </label>
+  </div>
+
+  <!-- Box ديال الثمن -->
+  <div id="priceBox">
+    <p id="daysCount">⏳ المدة: -- أيام</p>
+    <p id="dailyPrice">💵 ثمن اليوم: -- درهم</p>
+    <h3 id="totalPrice">💰 الثمن الإجمالي: -- درهم</h3>
+  </div>
+
+  <button class="btn" onclick="sendBooking()">
+    إرسال طلب الحجز عبر واتساب 💬
+  </button>
+</div>
+
+<script>
+  const carsData = {
+    "208": { name: "Peugeot 208", price: 350 },
+    "logan": { name: "Dacia Logan", price: 250 },
+    "hyundai-10": { name: "Hyundai i10", price: 300 }
+  };
+
+  // جلب carKey من الرابط
+  const params = new URLSearchParams(window.location.search);
+  const carKey = params.get("car");
+  const car = carsData[carKey];
+
+  if (!car) {
+    alert("⚠️ السيارة غير موجودة!");
+  } else {
+    document.getElementById("carName").textContent = car.name;
+  }
+
+  // Highlight Extras Cards
+  document.querySelectorAll(".extra-card input").forEach(input => {
+    input.addEventListener("change", function () {
+      if (this.checked) {
+        this.parentElement.classList.add("active");
+      } else {
+        this.parentElement.classList.remove("active");
+      }
+      calculateTotal();
+    });
+  });
+
+  // حساب الثمن الإجمالي
+  function calculateTotal() {
+    let start = document.getElementById("startDate").value;
+    let end = document.getElementById("endDate").value;
+
+    if (!start || !end) return;
+
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+
+    let diffTime = endDate - startDate;
+    let days = diffTime / (1000 * 60 * 60 * 24) + 1;
+
+    if (days <= 0) {
+      document.getElementById("totalPrice").textContent =
+        "⚠️ المرجو اختيار تاريخ صحيح";
+      return;
+    }
+
+    let pricePerDay = car.price;
+
+    // Extras
+    let extras = 0;
+    if (document.getElementById("driver").checked) extras += 150;
+    if (document.getElementById("gps").checked) extras += 50;
+    if (document.getElementById("babySeat").checked) extras += 30;
+
+    let finalDaily = pricePerDay + extras;
+    let total = days * finalDaily;
+
+    document.getElementById("daysCount").textContent =
+      `⏳ المدة: ${days} أيام`;
+
+    document.getElementById("dailyPrice").textContent =
+      `💵 ثمن اليوم: ${finalDaily} درهم`;
+
+    document.getElementById("totalPrice").textContent =
+      `💰 الثمن الإجمالي: ${total} درهم`;
+  }
+
+  document.getElementById("startDate").addEventListener("change", calculateTotal);
+  document.getElementById("endDate").addEventListener("change", calculateTotal);
+
+  // إرسال الطلب عبر واتساب
+  function sendBooking() {
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let idCard = document.getElementById("idCard").value;
+    let birthDate = document.getElementById("birthDate").value;
+    let city = document.getElementById("city").value;
+    let start = document.getElementById("startDate").value;
+    let end = document.getElementById("endDate").value;
+
+    if (!firstName || !lastName || !idCard || !birthDate) {
+      alert("⚠️ المرجو ملء جميع المعلومات الشخصية");
+      return;
+    }
+
+    if (!start || !end) {
+      alert("⚠️ المرجو اختيار تاريخ البداية والنهاية");
+      return;
+    }
+
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+    let diffTime = endDate - startDate;
+    let days = diffTime / (1000 * 60 * 60 * 24) + 1;
+
+    let pricePerDay = car.price;
+
+    let extras = 0;
+    if (document.getElementById("driver").checked) extras += 150;
+    if (document.getElementById("gps").checked) extras += 50;
+    if (document.getElementById("babySeat").checked) extras += 30;
+
+    let finalDaily = pricePerDay + extras;
+    let total = days * finalDaily;
+
+    let message =
+      `🚗 طلب حجز سيارة%0A` +
+      `السيارة: ${car.name}%0A%0A` +
+      `👤 الاسم: ${firstName} ${lastName}%0A` +
+      `🆔 البطاقة الوطنية: ${idCard}%0A` +
+      `🎂 تاريخ الازدياد: ${birthDate}%0A%0A` +
+      `📍 المدينة: ${city}%0A` +
+      `📅 من: ${start}%0A` +
+      `📅 إلى: ${end}%0A` +
+      `⏳ المدة: ${days} أيام%0A%0A` +
+      `➕ إضافات: ${extras} درهم/اليوم%0A` +
+      `💵 ثمن اليوم النهائي: ${finalDaily} درهم%0A` +
+      `💰 الثمن الإجمالي: ${total} درهم`;
+
+    window.open("https://wa.me/212600000000?text=" + message, "_blank");
+  }
+</script>
+
+</body>
+</html>

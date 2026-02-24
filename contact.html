@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اتصل بنا</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="page-header">
+    <h1>📩 اتصل بنا</h1>
+    <p>تواصل معنا بسهولة، نحن دائما في خدمتك</p>
+  </header>
+
+  <!-- ===== Contact Section ===== -->
+  <section class="contact-container">
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <h2>معلومات التواصل</h2>
+
+      <p>📍 العنوان: الدار البيضاء - المغرب</p>
+      <p>📞 الهاتف: +212 600 000 000</p>
+      <p>✉️ البريد: contact@car-rental.com</p>
+
+      <!-- زر واتساب مباشر -->
+      <a class="whatsapp-btn" href="https://wa.me/212600000000" target="_blank">
+        💬 تواصل عبر واتساب
+      </a>
+
+      <div class="social-links">
+        <a href="#">🌐 Facebook</a>
+        <a href="#">📸 Instagram</a>
+        <a href="#">💼 LinkedIn</a>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h2>أرسل رسالة</h2>
+
+      <!-- الفورم كيصيفط لـ contact.php -->
+      <form action="contact.php" method="POST">
+
+        <input type="text" name="name" placeholder="الاسم الكامل" required>
+        <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+        <input type="text" name="phone" placeholder="رقم الهاتف">
+
+        <textarea name="message" placeholder="اكتب رسالتك هنا..." required></textarea>
+
+        <button type="submit">📨 إرسال الرسالة</button>
+      </form>
+    </div>
+
+  </section>
+
+  <!-- ===== Map Section ===== -->
+  <section class="map">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.83915826364!2d-7.589843!3d33.573110!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d27f6a1f7b0f%3A0x4aef5f15b2c8c6e3!2sCasablanca!5e0!3m2!1sar!2sma!4v1700000000000"
+      width="100%" height="300"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <p>© 2026 جميع الحقوق محفوظة | موقع كراء السيارات 🚗</p>
+  </footer>
+
+</body>
+</html>
