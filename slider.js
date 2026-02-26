@@ -82,3 +82,8 @@ setInterval(() => {
   if (index >= slides.length) index = 0;
   showSlide(index);
 }, 5000);
+
+
+function toggleMenu() {
+  document.getElementById("navMenu").classList.toggle("active");
+}
