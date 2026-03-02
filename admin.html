@@ -124,57 +124,175 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-  function generatePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+async function generatePDF() {
 
-    // جمع المعلومات
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const idCard = document.getElementById("idCard").value;
-    const birthDate = document.getElementById("birthDate").value;
-
-    const carName = document.getElementById("carName").value;
-    const carNumber = document.getElementById("carNumber").value;
-    const seats = document.getElementById("seats").value;
-    const fuel = document.getElementById("fuelSelect").value;
-    const gear = document.getElementById("gear").value;
-    const horsePower = document.getElementById("horsePower").value;
-
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-
-    // التحقق من المعلومات
-    if(!firstName || !lastName || !idCard || !birthDate || !carName || !carNumber || !seats || !fuel || !gear || !horsePower || !startDate || !endDate){
+  const inputs = document.querySelectorAll("input, select");
+  for (let input of inputs) {
+    if (input.value.trim() === "") {
       alert("⚠️ المرجو ملء جميع الحقول قبل تحميل PDF");
       return;
     }
-
-    // كتابة المحتوى في PDF
-    let y = 20;
-    doc.setFontSize(16);
-    doc.text("استمارة حجز سيارة", 105, y, null, null, "center");
-    y += 10;
-    doc.setFontSize(12);
-    doc.text(`👤 الاسم: ${firstName} ${lastName}`, 20, y); y+=8;
-    doc.text(`🆔 البطاقة الوطنية: ${idCard}`, 20, y); y+=8;
-    doc.text(`🎂 تاريخ الازدياد: ${birthDate}`, 20, y); y+=12;
-
-    doc.text(`🚗 اسم السيارة: ${carName}`, 20, y); y+=8;
-    doc.text(`رقم السيارة: ${carNumber}`, 20, y); y+=8;
-    doc.text(`عدد المقاعد: ${seats}`, 20, y); y+=8;
-    doc.text(`نوع الوقود: ${fuel}`, 20, y); y+=8;
-    doc.text(`نوع المحرك: ${gear}`, 20, y); y+=8;
-    doc.text(`عدد الخيول: ${horsePower}`, 20, y); y+=12;
-
-    doc.text(`📅 من: ${startDate}`, 20, y); y+=8;
-    doc.text(`📅 إلى: ${endDate}`, 20, y); y+=20;
-
-    doc.text("🖊️ الإمضاء: ____________________", 20, y);
-
-    doc.save(`استمارة_${carName}_${firstName}.pdf`);
   }
+
+  const contractNumber = "INT-" + Date.now();
+  const today = new Date().toLocaleDateString("ar-MA");
+
+  const diffDays = Math.ceil(
+    (new Date(startDate.value) - new Date(endDate.value)) / 
+    (1000*60*60*24)
+  ) * -1 + 1;
+
+  const pricePerDay = 200;
+  const totalPrice = diffDays * pricePerDay;
+
+  const contractDiv = document.createElement("div");
+  contractDiv.style.fontFamily = "Cairo";
+  contractDiv.style.direction = "rtl";
+  contractDiv.style.background = "white";
+  contractDiv.style.width = "800px";
+  contractDiv.style.padding = "50px";
+  contractDiv.style.position = "relative";
+
+  contractDiv.innerHTML = `
+
+    <!-- Watermark -->
+    <div style="
+      position:absolute;
+      top:40%;
+      left:20%;
+      font-size:80px;
+      color:rgba(0,0,0,0.05);
+      transform:rotate(-30deg);
+      pointer-events:none;">
+      RENTAL
+    </div>
+
+    <!-- Header -->
+    <div style="border-bottom:4px solid #111;padding-bottom:20px;margin-bottom:30px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <h2 style="margin:0;">PREMIUM CAR RENTAL</h2>
+          <div style="font-size:13px;color:#555;">
+            Téléphone: 06XXXXXXXX<br>
+            Email: contact@agency.com
+          </div>
+        </div>
+        <div style="font-size:14px;text-align:left;">
+          <strong>Contract ID:</strong> ${contractNumber}<br>
+          <strong>Date:</strong> ${today}
+        </div>
+      </div>
+    </div>
+
+    <!-- Client -->
+    <h3 style="border-left:5px solid #111;padding-left:10px;">CLIENT INFORMATION</h3>
+    <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Full Name</td>
+        <td style="padding:10px;border:1px solid #ddd;">
+          ${firstName.value} ${lastName.value}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">ID Number</td>
+        <td style="padding:10px;border:1px solid #ddd;">${idCard.value}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Birth Date</td>
+        <td style="padding:10px;border:1px solid #ddd;">${birthDate.value}</td>
+      </tr>
+    </table>
+
+    <!-- Vehicle -->
+    <h3 style="border-left:5px solid #111;padding-left:10px;">VEHICLE DETAILS</h3>
+    <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Vehicle</td>
+        <td style="padding:10px;border:1px solid #ddd;">${carName.value}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Plate Number</td>
+        <td style="padding:10px;border:1px solid #ddd;">${carNumber.value}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Fuel</td>
+        <td style="padding:10px;border:1px solid #ddd;">${fuelSelect.value}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">Transmission</td>
+        <td style="padding:10px;border:1px solid #ddd;">${gear.value}</td>
+      </tr>
+    </table>
+
+    <!-- Rental Period -->
+    <h3 style="border-left:5px solid #111;padding-left:10px;">RENTAL PERIOD</h3>
+    <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">From</td>
+        <td style="padding:10px;border:1px solid #ddd;">${startDate.value}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">To</td>
+        <td style="padding:10px;border:1px solid #ddd;">${endDate.value}</td>
+      </tr>
+      <tr style="background:#f2f2f2;font-weight:bold;">
+        <td style="padding:10px;border:1px solid #ddd;">Total Price</td>
+        <td style="padding:10px;border:1px solid #ddd;">
+          ${totalPrice} MAD
+        </td>
+      </tr>
+    </table>
+
+    <!-- Signatures -->
+    <div style="margin-top:60px;display:flex;justify-content:space-between;">
+      <div>
+        Client Signature<br><br>
+        ______________________
+      </div>
+      <div>
+        Company Stamp & Signature<br><br>
+        ______________________
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="margin-top:70px;font-size:11px;color:#666;text-align:center;">
+      This contract is legally binding under Moroccan law.
+    </div>
+  `;
+
+  document.body.appendChild(contractDiv);
+
+  const canvas = await html2canvas(contractDiv);
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const imgWidth = 190;
+  const imgHeight = canvas.height * imgWidth / canvas.width;
+
+  doc.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+  // حفظ العقد في LocalStorage
+let contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+
+contracts.push({
+  contractId: contractNumber,
+  client: firstName.value + " " + lastName.value,
+  car: carName.value,
+  total: totalPrice,
+  date: today
+});
+
+localStorage.setItem("contracts", JSON.stringify(contracts));
+  doc.save(`Premium_Contract_${contractNumber}.pdf`);
+
+  document.body.removeChild(contractDiv);
+}
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </body>
 </html>
